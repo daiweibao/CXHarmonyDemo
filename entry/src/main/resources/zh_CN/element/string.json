@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "label"
+    },
+    {
+      "name": "width_label",
+      "value": "图片宽度"
     }
   ]
 }

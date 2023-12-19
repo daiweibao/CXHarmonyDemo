@@ -1,5 +1,12 @@
 {
   "module": {
+    //requestPermissions该标签标识应用运行时需向系统申请的权限集合。
+    "requestPermissions": [
+      {
+        //网络权限
+        "name": "ohos.permission.INTERNET"
+      }
+    ],
     "name": "entry",
     "type": "entry",
     "description": "$string:module_desc",
