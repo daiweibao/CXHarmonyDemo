@@ -1,8 +1,10 @@
+//案例一：拖动滑块，图片放大缩小
+
 import App from '@system.app'
 import resourceManager from '@ohos.resourceManager'
 @Entry
 @Component
-struct ImagePage {
+struct CXImagePage {
   @State imageWidth: number = 150
 
   build() {

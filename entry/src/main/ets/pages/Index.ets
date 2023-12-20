@@ -50,13 +50,3 @@ struct Index {//自定义组件：可复用的UI单元
     .height('100%')
   }
 }
-
-
-/*
-  @State times: number = 0
- //声明一个button
- Button(`点我${this.times} 次`)//注意用（`）符号而不是单引号（'）
- .backgroundColor('#36D')
- .onClick(() => this.times++)
-
- * */
