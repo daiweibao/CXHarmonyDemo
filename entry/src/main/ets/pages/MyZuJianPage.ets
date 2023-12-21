@@ -1,5 +1,4 @@
 //商品列表：自定义组件
-import App from '@system.app'
 //导入组件
 import { CXNavView } from '../CXComponents/CXNavComponent'
 
@@ -118,7 +117,6 @@ struct CXItemPage {
 
             //调用局部自定义函数
             this.CXItemCard(item)
-
           }
         })
       }
