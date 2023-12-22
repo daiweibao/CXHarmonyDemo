@@ -1,7 +1,8 @@
 //List列表组件的增加cell、删除cell、cell添加类似iOS侧滑删除按钮
-//@Prop、@Link的使用
+//@Observed和@ObjectLink的使用
 
 // 任务类
+@Observed//修饰数组，解决嵌套刷新问题
 class Task{
   static id: number = 1
   // 任务名称
@@ -38,16 +39,16 @@ class StatInfo {
 @Entry
 @Component
 struct CXPropPageTwo {
-  //统计信息
-  @State stat: StatInfo = new StatInfo()
+  //@Provide提供者: 可以跨级传递数据
+  @Provide stat: StatInfo = new StatInfo()
 
   build() {
     Row() {
       Column({space: 10}) {
         //任务进度
-        TaskStatistics({finishTask: this.stat.finishTask, totalTask: this.stat.totalTask})
+        TaskStatistics()//@Consume修饰，可以省略参数传递
         //任务列表
-        TaskList({stat: $stat})
+        TaskList()//@Consume修饰，可以省略参数传递
 
       }
       .width('100%')
@@ -60,10 +61,8 @@ struct CXPropPageTwo {
 //子组件1：任务进度组件
 @Component
 struct TaskStatistics {
-  //【@Prop单向传递】总任务数量
-  @Prop totalTask: number
-  //已完成任务数量
-  @Prop finishTask: number
+  //统计信息
+  @Consume stat: StatInfo
 
   build() {
     //1、任务进度卡片
@@ -76,17 +75,17 @@ struct TaskStatistics {
       Stack(){
         //进度条，环形进度条等
         Progress({
-          value:this.finishTask,//已经完成进度
-          total: this.totalTask,//总进度
+          value:this.stat.finishTask,//已经完成进度
+          total: this.stat.totalTask,//总进度
           type: ProgressType.Ring//类型：Ring环形进度条
         })
           .width('100')
 
         Row(){
-          Text(this.finishTask.toString())
+          Text(this.stat.finishTask.toString())
             .fontSize(24)
             .fontColor('#36D')
-          Text('/' + this.totalTask.toString())
+          Text('/' + this.stat.totalTask.toString())
             .fontSize(24)
         }
       }
@@ -99,12 +98,12 @@ struct TaskStatistics {
 //子组件2
 @Component
 struct TaskList {
-  //统计信息
-  @Link stat: StatInfo
+  //要与@Provider的变量名保持一致，都叫stat
+  @Consume stat: StatInfo
   //任务数组
   @State tasks:Task[] = []
 
-  //更新任务数量
+  //更新任务数量函数
   handleTaskChange(){
     //更新任务总数
     this.stat.totalTask = this.tasks.length
@@ -129,21 +128,8 @@ struct TaskList {
           this.tasks,
           (item: Task, index) => {
             ListItem(){
-              Row(){
-                Text(item.name)
-                  .fontSize(20)
-
-                Checkbox()
-                  .select(item.finished)//是否选中
-                  .onChange( isSelected => {
-                    //更新当前任务状态
-                    item.finished = isSelected
-                    //更新任务数量
-                    this.handleTaskChange()
-                  })
-              }
-              .card()
-              .justifyContent(FlexAlign.SpaceBetween)
+              //通过参数传递函数：this.handleTaskChange.bind(this)；bind(this)是把当前的this传递给组件
+             TaskItem({item: item, onTaskChange: this.handleTaskChange.bind(this)})
             }
             .swipeAction({end: this.DeleteButton(index)})//cell侧滑删除
           }
@@ -175,4 +161,37 @@ struct TaskList {
     })
   }
 }
+
+
+@Component
+struct TaskItem {
+  @ObjectLink item: Task
+  //定义一个函数，接收外界传入
+  onTaskChange: () => void
+  build() {
+    Row(){
+      if (this.item.finished){
+        Text(this.item.name)
+          .fontSize(20)
+          .finishedTask()
+      }else {
+        Text(this.item.name)
+          .fontSize(20)
+      }
+
+      Checkbox()
+        .select(this.item.finished)//是否选中
+        .onChange( isSelected => {
+          //更新当前任务状态
+          this.item.finished = isSelected
+          //更新任务数量
+          this.onTaskChange()
+        })
+    }
+    .card()
+    .justifyContent(FlexAlign.SpaceBetween)
+  }
+}
+
+
 
