@@ -1,5 +1,5 @@
-
-
+//List列表组件的增加cell、删除cell、cell添加类似iOS侧滑删除按钮
+//未使用Prop,在CXPropPageTwo.ets里演示
 
 // 任务类
 class Task{
@@ -94,10 +94,10 @@ struct CXPropPage {
                     .fontSize(20)
 
                   Checkbox()
-                    .select(item.finished)
-                    .onChange( val => {
+                    .select(item.finished)//是否选中
+                    .onChange( isSelected => {
                       //更新当前任务状态
-                      item.finished = val
+                      item.finished = isSelected
                       //更新任务数量
                       this.handleTaskChange()
                     })
@@ -120,9 +120,23 @@ struct CXPropPage {
   }
 
   @Builder DeleteButton(index: number){
+    //删除按钮
      Button(){
-       Image($r('app.media.nav_refresh'))
+       //按钮上的图片
+       Image($r('app.media.ic_public_delete'))
+         .fillColor(Color.White)
+         .width(20)
      }
+    .width(40)
+    .height(40)
+    .type(ButtonType.Circle)
+    .backgroundColor(Color.Orange)
+    .margin(10)
+    .onClick( () => {
+      //删除按钮点击事件：删除数组元素（从那个元素开始删除，删除几个）
+      this.tasks.splice(index, 1)
+      this.handleTaskChange()
+    })
   }
 }
 
