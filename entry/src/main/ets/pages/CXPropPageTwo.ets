@@ -128,7 +128,7 @@ struct TaskList {
           this.tasks,
           (item: Task, index) => {
             ListItem(){
-              //通过参数传递函数：this.handleTaskChange.bind(this)；bind(this)是把当前的this传递给组件
+              //@ObjectLink通过参数传递函数：this.handleTaskChange.bind(this)；bind(this)是把当前的this传递给组件
              TaskItem({item: item, onTaskChange: this.handleTaskChange.bind(this)})
             }
             .swipeAction({end: this.DeleteButton(index)})//cell侧滑删除
