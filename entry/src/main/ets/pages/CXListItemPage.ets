@@ -18,7 +18,7 @@ class Item {
 
 @Entry
 @Component
-struct CXItemPage {
+struct CXListItemPage {
   @State message: string = 'Hello World'
 
   //商品数据

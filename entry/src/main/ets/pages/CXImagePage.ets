@@ -1,7 +1,6 @@
 //案例一：拖动滑块，图片放大缩小
+import { CXNavView } from '../CXComponents/CXNavComponent'
 
-import App from '@system.app'
-import resourceManager from '@ohos.resourceManager'
 @Entry
 @Component
 struct CXImagePage {
@@ -9,6 +8,8 @@ struct CXImagePage {
 
   build() {
     Column() {
+      CXNavView({navTitle: '图片查看'})
+      .margin({top: 20})
       Row() {
         //本地图片
         Image($r('app.media.chaoxiheader'))

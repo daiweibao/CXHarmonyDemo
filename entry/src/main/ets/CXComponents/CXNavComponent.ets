@@ -1,16 +1,41 @@
+import router from '@ohos.router'
 @Component
 //用export导出组件
 export struct CXNavView {
   //导航栏标题
   private navTitle: ResourceStr
+
+  @State params: any = router.getParams()
+
   build(){
     //标题
     Row() {
       Image($r('app.media.nav_back'))
         .width(30)
-      Text(this.navTitle)
-        .fontSize(30)
-        .fontWeight(FontWeight.Bold)
+        .onClick(() => {
+          //
+          // //点击返回按钮时候，弹窗提示是否确定返回
+          // router.showAlertBeforeBackPage({
+          //   message: '确定要返回吗？'
+          // })
+          // //返回上级页面
+          router.back()
+
+          // //返回到指定页面并传值
+          // router.back({
+          //   url: 'pages/Index',
+          //   params:{id: '10'}//传递的参数
+          // })
+
+        })
+
+
+      if (this.params && this.navTitle){
+        Text(this.params.id+'.'+this.navTitle)
+          .fontSize(30)
+          .fontWeight(FontWeight.Bold)
+
+      }
       Blank()//空白组件
       Image($r('app.media.nav_refresh'))
         .width(30)

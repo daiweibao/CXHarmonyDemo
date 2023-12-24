@@ -1,52 +1,88 @@
+//程序入口，首页
+//导入页面内跳转系统库
+import router from '@ohos.router'
 
-//Entry、Component 装饰器，用来装饰类结构、方法、变量
-@Entry//标记当前组件是入口组件，其他地方可以调用
-@Component//标记自定义组件
-struct Index {//自定义组件：可复用的UI单元
+class RouterInfo {
+  //页面内路径
+  urlPage: string
+  //页面标题
+  title: string
 
-  //@state：标记该变量是状态变量，值变化时会融发UI剧新
-  @State message: string = 'Hello World'
+  constructor(urlPage: string, title: string) {
+    this.urlPage = urlPage;
+    this.title = title
+  }
+}
 
-  build() { //build是：UI描述，其内部以【声明式】方式描述UI工结构
-    Row() { //行
-      //下面UI组件有ArkUI提供
-      //容器组件：用来完成页面布局，如：Row、Colum；基础组件：自带样式和功能的页面元素，如Text
-      Column() { //列
-        //声明一个文本
-        Text(this.message)
-          .fontSize(30) //字号
-          .fontWeight(FontWeight.Bold) //字体粗细
-          .fontColor('#36D') //颜色
-          .onClick(() => { //点击事件
-            //处理事件，如点击事件
-            this.message = '点击了文本' //点击文本后页面UI会直接变化，自动刷新
-          })
-        //网络图片
-        // Image('https://upload-images.jianshu.io/upload_images/1521667-4fa8c78d7b924a38.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1024')
-        //本地图片
-         Image($r('app.media.chaoxiheader'))
-          .width(250)//单位vp，虚拟像素
-           .interpolation(ImageInterpolation.High)
-        //文本
-        Text('我是文本')
-          .lineHeight(32)//行高
-          .fontSize(20)//字体大小
-          .fontColor('#ff1876f8')//字体颜色
-          .fontWeight(FontWeight.Medium)//字体粗细
+@Entry
+@Component
+struct CXHomePage  {
+  @State message: string = '页面列表'
+  private routers: RouterInfo[] = [
+    new RouterInfo('pages/CXImagePage','图片查看案例'),
+    new RouterInfo('pages/MyZuJianPage','商品列表案例'),
+    new RouterInfo('pages/CXPropPage','任务列表案例')
+  ]
 
+  build() {
+    Column(){
+
+      Text(this.message)
+        .fontSize(50)
+        .fontWeight(FontWeight.Bold)
+        .height(80)
+
+      List({space: 15}){
+        ForEach(
+          this.routers,
+          (router, index) => {
+            ListItem(){
+              this.RouterItem(router, index+1)
+            }
+          }
+        )
       }
+      .layoutWeight(1)
+      .alignListItem(ListItemAlign.Center)
       .width('100%')
-
-      // Row() {
-      //     // Image($r('app.media.chaoxiheader')) //本地图片路径
-      //   Image('https://upload-images.jianshu.io/upload_images/1521667-4fa8c78d7b924a38.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1024')
-      //     .width(100) //宽度
-      //     .height(100) //高度
-      //     .borderRadius(10) //边框圆角
-      //     .interpolation(ImageInterpolation.High) //图片插值
-      // }.height('30%')
-
     }
+    .width('100%')
     .height('100%')
+  }
+
+  @Builder
+  RouterItem(r: RouterInfo, i: number){
+    Row(){
+      Text(i + '.')
+        .fontSize(20)
+        .fontColor(Color.White)
+
+      Blank()
+
+      Text(r.title)
+        .fontSize(20)
+        .fontColor(Color.White)
+    }
+    .width('90%')
+    .padding(12)
+    .backgroundColor('#38f')
+    .borderRadius(20)
+    .shadow({radius: 6, color: '#4F000000', offsetX: 2, offsetY: 2})
+    .onClick(() => {
+      console.log(`点击了页面跳转：${r.urlPage}`)
+      //点击，router页面内跳转，跳转到指定路径并传递参数
+      router.pushUrl({
+          url: r.urlPage,//页面跳转路径，如果新建的是ArkTS文件，需要在entry/src/main/resources/base/profile/main_pages.json文件中配置路由地址。如果新建的文件是page类型则会自动配置。
+          params:{id: i}//传递的参数
+        },
+        router.RouterMode.Standard,//页面跳转模型，RouterMode枚举
+        err => {//页面跳转异常回调函数
+          if (err){
+            //异常若误码：100001-内部者误，可能是渲染失改；100002-路出地址误；100003:-路由栈中页面超过32个。
+            console.log(`路由失败.errCode:${err.code} errMsg:${err.message}`)
+          }
+        }
+      )
+    })
   }
 }

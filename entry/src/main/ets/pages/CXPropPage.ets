@@ -1,5 +1,6 @@
 //List列表组件的增加cell、删除cell、cell添加类似iOS侧滑删除按钮
 //未使用Prop,在CXPropPageTwo.ets里演示
+import { CXNavView } from '../CXComponents/CXNavComponent'
 
 // 任务类
 class Task{
@@ -47,6 +48,8 @@ struct CXPropPage {
   build() {
     Row() {
       Column({space: 10}) {
+        CXNavView({navTitle: '任务列表'})
+          .margin({top: 20})
         //1、任务进度卡片
         Row(){
           Text('任务进度')
