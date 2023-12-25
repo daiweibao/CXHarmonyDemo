@@ -10,7 +10,7 @@ export struct CXNavView {
   build(){
     //标题
     Row() {
-      Image($r('app.media.nav_back'))
+      Image($r('app.media.ic_public_back'))
         .width(30)
         .onClick(() => {
           //
@@ -37,7 +37,7 @@ export struct CXNavView {
 
       }
       Blank()//空白组件
-      Image($r('app.media.nav_refresh'))
+      Image($r('app.media.ic_public_refresh'))
         .width(30)
     }
     .width('100%')

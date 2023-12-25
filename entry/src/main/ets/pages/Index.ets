@@ -21,7 +21,8 @@ struct CXHomePage  {
   private routers: RouterInfo[] = [
     new RouterInfo('pages/CXImagePage','图片查看案例'),
     new RouterInfo('pages/MyZuJianPage','商品列表案例'),
-    new RouterInfo('pages/CXPropPage','任务列表案例')
+    new RouterInfo('pages/CXPropPage','任务列表案例'),
+    new RouterInfo('pages/AnimationPage','小鱼动画案例')
   ]
 
   build() {

@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/CXImagePage",
     "pages/CXPropPage",
-    "pages/MyZuJianPage"
+    "pages/MyZuJianPage",
+    "pages/AnimationPage"
   ]
 }
