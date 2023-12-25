@@ -4,6 +4,7 @@
     "pages/CXImagePage",
     "pages/CXPropPage",
     "pages/MyZuJianPage",
-    "pages/AnimationPage"
+    "pages/AnimationPage",
+    "pages/AnimationTestPage"
   ]
 }
