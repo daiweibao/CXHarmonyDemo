@@ -1,5 +1,6 @@
+// @ts-nocheck
 // @Provide、@Consume使用案例
-@Entry
+// @Entry
 @Component
 struct ProviderConsume {
   //@Provide提供者: 可以跨级传递数据
@@ -36,5 +37,37 @@ struct ProviderConsume_sun {
           this.message = "99999999"
         })
     }
+  }
+}
+
+
+
+// xxx.ets
+@Entry
+@Component
+struct CompA {
+  //括号里写监听方法名字
+  @State @Watch("onChanged") count : number = 0
+
+  build() {
+    Column() {
+      Button('add to basket ' + this.count)
+        .margin(15)
+        .onClick(() => {
+          //点击修改属性
+          this.count++
+        })
+      Text(`${this.count}`)
+        .fontSize(30)
+    }
+  }
+  // 监听方法
+  onChanged(){
+    AlertDialog.show({
+      title:'走了监听方法',
+      primaryButton:{
+        value: '确定'
+      }
+    })
   }
 }

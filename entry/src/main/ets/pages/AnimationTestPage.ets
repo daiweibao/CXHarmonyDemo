@@ -1,4 +1,4 @@
-
+import window from '@ohos.window';
 //属性动画
 // @Entry
 @Component
@@ -56,8 +56,12 @@ struct IndexXianShi {
         .margin(30)
         .onClick(() => {
           if (this.flag) {
-            //按钮变小
-            animateTo({}, () => {
+            //显式调用animateTo函数触发动画。
+            // 按钮变小
+            animateTo({//全局动画
+              duration: 1000//动画时长，毫秒
+            }, () => {
+              //修改组件属性相关联的状态变量
               this.widthSize = 150
               this.heightSize = 60
             })
@@ -78,7 +82,7 @@ struct IndexXianShi {
 }
 
 //组件转场动画：
-@Entry
+// @Entry
 @Component
 struct Index {
   @State flag: boolean = true
@@ -98,17 +102,61 @@ struct Index {
         Image($r('app.media.icon'))
           .width(300)
           .height(300)
-          //展示图片控件的动画：左右翻转后展示
+          //【插入组件动画】展示图片控件的动画：左右翻转后展示
           .transition({ type: TransitionType.Insert, scale: { x: 0, y: 1.0 } })
-          //隐藏图片控件的动画：顺时针旋转180度后移除
+          //【删除组件动画】隐藏图片控件的动画：顺时针旋转180度后移除
           .transition({ type: TransitionType.Delete, rotate: { angle: 180 } })
       }else {
-        //不创建图片控件
+        //不创建图片控件，相当于删除Image组件
       }
     }
     .width('100%')
   }
 }
+
+
+//组件转场动画--底部自定义aleat弹窗
+@Entry
+@Component
+struct IndexBottumAleat {
+  @State flag: boolean = false
+
+  build() {
+    Column() {
+      Button(this.flag ? '隐藏组件' : '展示组件')
+        .margin(30)
+        .onClick(() => {
+          animateTo({ duration: 350 }, () => {
+            //动画结束后改变状态，重新渲染UI
+            this.flag = !this.flag
+          })
+        })
+      if (this.flag) {
+        Blank()
+        //创建组件
+        Column()
+          .width('100%')
+          .height(300)
+          .backgroundColor('#36D')
+            //【插入组件动画】展示控件的动画：在y轴方向移动300
+          .transition({
+            type: TransitionType.Insert,
+            translate:{y: 300}//从屏幕底部出来
+          })
+            //【删除组件动画】隐藏控件的动画：在y轴方向移动300
+          .transition({
+            type: TransitionType.Delete,
+            translate:{y: 300}//从屏幕底部消失
+          })
+      }else {
+        //不创建图片控件，相当于删除组件
+      }
+    }
+    .width('100%')
+    .height('100%')
+  }
+}
+
 
 
 
