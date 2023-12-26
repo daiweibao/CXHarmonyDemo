@@ -138,16 +138,8 @@ struct IndexBottumAleat {
           .width('100%')
           .height(300)
           .backgroundColor('#36D')
-            //【插入组件动画】展示控件的动画：在y轴方向移动300
-          .transition({
-            type: TransitionType.Insert,
-            translate:{y: 300}//从屏幕底部出来
-          })
-            //【删除组件动画】隐藏控件的动画：在y轴方向移动300
-          .transition({
-            type: TransitionType.Delete,
-            translate:{y: 300}//从屏幕底部消失
-          })
+            //【插入组件动画】展示控件的动画：在y轴方向移动300，从屏幕底部出来
+          .transition({ translate:{y: 300} })
       }else {
         //不创建图片控件，相当于删除组件
       }
