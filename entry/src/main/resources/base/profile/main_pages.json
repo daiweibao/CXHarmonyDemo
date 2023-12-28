@@ -5,6 +5,12 @@
     "pages/CXPropPage",
     "pages/MyZuJianPage",
     "pages/AnimationPage",
-    "pages/AnimationTestPage"
+    "pages/AnimationTestPage",
+    "pages/LifeCirePage",
+    "pages/TestPage1",
+    "pages/TestPage2",
+    "pages/AlertCXCenterViewPage",
+    "pages/DocumentListPage",
+    "pages/DocumentPage"
   ]
 }

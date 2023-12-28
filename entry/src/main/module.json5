@@ -9,6 +9,7 @@
     ],
     "name": "entry",
     "type": "entry",
+    "srcEntry": "./ets/myabilitystage/MyAbilityStage.ts",
     "description": "$string:module_desc",
     "mainElement": "EntryAbility",
     "deviceTypes": [
@@ -28,6 +29,8 @@
         "startWindowIcon": "$media:icon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,
+        "launchType": "singleton",
+//        "launchType": "specified",
         "skills": [
           {
             "entities": [
@@ -38,6 +41,15 @@
             ]
           }
         ]
+      },
+      {
+        "name": "DocumentAbility",
+        "srcEntry": "./ets/documentability/DocumentAbility.ts",
+        "description": "$string:DocumentAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:DocumentAbility_label",
+        "startWindowIcon": "$media:icon",
+        "startWindowBackground": "$color:start_window_background"
       }
     ]
   }

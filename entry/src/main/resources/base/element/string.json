@@ -15,6 +15,14 @@
     {
       "name": "width_label",
       "value": "图片宽度"
+    },
+    {
+      "name": "DocumentAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "DocumentAbility_label",
+      "value": "label"
     }
   ]
 }

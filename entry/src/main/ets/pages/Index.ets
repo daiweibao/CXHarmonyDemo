@@ -22,8 +22,37 @@ struct CXHomePage  {
     new RouterInfo('pages/CXImagePage','图片查看案例'),
     new RouterInfo('pages/MyZuJianPage','商品列表案例'),
     new RouterInfo('pages/CXPropPage','任务列表案例'),
-    new RouterInfo('pages/AnimationPage','小鱼动画案例')
+    new RouterInfo('pages/AnimationPage','小鱼动画案例'),
+    new RouterInfo('pages/LifeCirePage','生命周期案例1'),
+    new RouterInfo('pages/TestPage1','生命周期案例2'),
+    new RouterInfo('pages/DocumentListPage','多UIAbility跳转')
   ]
+
+  tag: string = 'Index Page'
+
+  //页面即将出现时回调该接口
+  aboutToAppear(){
+    console.log(this.tag, 'about to appear')
+  }
+  //页面出现：页面每次显示时触发一次
+  onPageShow(){
+    console.log(this.tag, 'on page show')
+  }
+  //当用户点击手机【系统返回按钮】时触发
+  onBackPress(){
+    console.log(this.tag, 'on back press')
+  }
+  //页面隐藏：页面每次隐藏时触发一次
+  onPageHide(){
+    console.log(this.tag, 'on page hide')
+  }
+  //页面销毁之前执行
+  aboutToDisappear(){
+    console.log(this.tag, 'about to disappear')
+  }
+
+
+
 
   build() {
     Column(){
