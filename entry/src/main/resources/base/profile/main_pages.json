@@ -11,6 +11,8 @@
     "pages/TestPage2",
     "pages/AlertCXCenterViewPage",
     "pages/DocumentListPage",
-    "pages/DocumentPage"
+    "pages/DocumentPage",
+    "pages/CXTabsMainPage",
+    "pages/CXNavigationTestPage"
   ]
 }
