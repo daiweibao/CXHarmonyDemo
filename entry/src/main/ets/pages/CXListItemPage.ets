@@ -105,6 +105,8 @@ struct CXListItemPage {
       .width('100%')
       .layoutWeight(1)//父容器尺寸确定时，使用layoutWeight属性设置子元素和兄弟元素在主轴上的权重，忽略元素本身尺寸设置，使它们在任意尺寸的设备下自适应占满剩余空间。
       .listDirection(Axis.Vertical) //列表方向，默认纵向（垂直）
+      .scrollBar(BarState.On) // 滚动条常驻
+      .edgeEffect(EdgeEffect.Spring) // 滚动到边缘再拖动回弹效果
 
     }
     .width('100%')
