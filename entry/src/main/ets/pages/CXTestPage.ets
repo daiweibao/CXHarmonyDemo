@@ -25,7 +25,14 @@ struct test {
         .height(50)
         .backgroundColor(0xD2B48C)
         .margin({right: 15,bottom: 10})
-      Text('5、撒范德萨范德萨范德萨')
+
+      Text('5、吃饭了')
+        // .width('50%')
+        .height(50)
+        .backgroundColor(0xD2B48C)
+        .margin({right: 15,bottom: 10})
+
+      Text('6、撒范德萨范德萨范德萨')
         // .width('50%')
         .height(50)
         .backgroundColor(0xD2B48C)
