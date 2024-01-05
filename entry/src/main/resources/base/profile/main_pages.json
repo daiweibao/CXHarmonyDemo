@@ -13,6 +13,7 @@
     "pages/DocumentListPage",
     "pages/DocumentPage",
     "pages/CXTabsMainPage",
-    "pages/CXNavigationTestPage"
+    "pages/CXNavigationTestPage",
+    "pages/FlexTestPage"
   ]
 }
