@@ -14,6 +14,7 @@
     "pages/DocumentPage",
     "pages/CXTabsMainPage",
     "pages/CXNavigationTestPage",
-    "pages/CXStackTestPage"
+    "pages/CXStackTestPage",
+    "pages/FlexTestPage"
   ]
 }
