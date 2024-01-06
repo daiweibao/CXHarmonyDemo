@@ -1,45 +1,61 @@
-
 @Entry
 @Component
-struct test {
+struct Index {
   build() {
-    //布局换行：Wrap
-    Flex({wrap: FlexWrap.Wrap }) {
-      Text('1、防守打法很多搜哈')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xF5DEB3)
-        .margin({right: 15,bottom: 10})
-      Text('2、热额公对公')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
-      Text('3、阿范德萨')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
-      Text('4、通融通融玩儿')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
+    Row() {
+      RelativeContainer() {
+        Row()
+          .width(100)
+          .height(100)
+          .backgroundColor('#FF3333')
+          .alignRules({
+            top: { anchor: '__container__', align: VerticalAlign.Top },  //以父容器为锚点，竖直方向顶头对齐
+            middle: { anchor: '__container__', align: HorizontalAlign.Center }  //以父容器为锚点，水平方向居中对齐
+          })
+          .id('row1')  //设置锚点为row1
 
-      Text('5、吃饭了')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
+        Row() {
+          Image($r('app.media.icon'))
+        }
+        .height(100).width(100)
+        .alignRules({
+          top: { anchor: 'row1', align: VerticalAlign.Bottom },  //以row1组件为锚点，竖直方向低端对齐
+          left: { anchor: 'row1', align: HorizontalAlign.Start }  //以row1组件为锚点，水平方向开头对齐
+        })
+        .id('row2')  //设置锚点为row2
 
-      Text('6、撒范德萨范德萨范德萨')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
+        Row()
+          .width(100)
+          .height(100)
+          .backgroundColor('#FFCC00')
+          .alignRules({
+            top: { anchor: 'row2', align: VerticalAlign.Top }
+          })
+          .id('row3')  //设置锚点为row3
+
+        Row()
+          .width(100)
+          .height(100)
+          .backgroundColor('#FF9966')
+          .alignRules({
+            top: { anchor: 'row2', align: VerticalAlign.Top },
+            left: { anchor: 'row2', align: HorizontalAlign.End },
+          })
+          .id('row4')  //设置锚点为row4
+
+        Row()
+          .width(100)
+          .height(100)
+          .backgroundColor('#FF66FF')
+          .alignRules({
+            top: { anchor: 'row2', align: VerticalAlign.Bottom },
+            middle: { anchor: 'row2', align: HorizontalAlign.Center }
+          })
+          .id('row5')  //设置锚点为row5
+      }
+      .width(300).height(300)
+      .border({ width: 2, color: '#6699FF' })
     }
-    .width('100%')
-    .padding(10)
-    .backgroundColor(0xAFEEEE)
+    .height('100%').margin({ left: 30 })
   }
 }
