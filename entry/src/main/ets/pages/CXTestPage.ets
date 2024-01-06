@@ -1,45 +1,58 @@
+// Stage模型下的示例：
+import mediaquery from '@ohos.mediaquery';
+import window from '@ohos.window';
+import common from '@ohos.app.ability.common';
+
+let portraitFunc = null;
 
 @Entry
 @Component
-struct test {
-  build() {
-    //布局换行：Wrap
-    Flex({wrap: FlexWrap.Wrap }) {
-      Text('1、防守打法很多搜哈')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xF5DEB3)
-        .margin({right: 15,bottom: 10})
-      Text('2、热额公对公')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
-      Text('3、阿范德萨')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
-      Text('4、通融通融玩儿')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
+struct MediaQueryExample {
+  @State color: string = '#DB7093';
+  @State text: string = 'Portrait';
+  // 当设备横屏时条件成立
+  listener = mediaquery.matchMediaSync('(orientation: landscape)');
 
-      Text('5、吃饭了')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
-
-      Text('6、撒范德萨范德萨范德萨')
-        // .width('50%')
-        .height(50)
-        .backgroundColor(0xD2B48C)
-        .margin({right: 15,bottom: 10})
+  // 当满足媒体查询条件时，触发回调
+  onPortrait(mediaQueryResult) {
+    if (mediaQueryResult.matches) { // 若设备为横屏状态，更改相应的页面布局
+      this.color = '#FFD700';
+      this.text = 'Landscape';
+    } else {
+      this.color = '#DB7093';
+      this.text = 'Portrait';
     }
-    .width('100%')
-    .padding(10)
-    .backgroundColor(0xAFEEEE)
+  }
+
+  aboutToAppear() {
+    // 绑定当前应用实例
+    portraitFunc = this.onPortrait.bind(this);
+    // 绑定回调函数
+    this.listener.on('change', portraitFunc);
+  }
+
+  // 改变设备横竖屏状态函数
+  private changeOrientation(isLandscape: boolean) {
+    // 获取UIAbility实例的上下文信息
+    let context = getContext(this) as common.UIAbilityContext;
+    // 调用该接口手动改变设备横竖屏状态
+    window.getLastWindow(context).then((lastWindow) => {
+      lastWindow.setPreferredOrientation(isLandscape ? window.Orientation.LANDSCAPE : window.Orientation.PORTRAIT)
+    });
+  }
+
+  build() {
+    Column({ space: 50 }) {
+      Text(this.text).fontSize(50).fontColor(this.color)
+      Text('Landscape').fontSize(50).fontColor(this.color).backgroundColor(Color.Orange)
+        .onClick(() => {
+          this.changeOrientation(true);
+        })
+      Text('Portrait').fontSize(50).fontColor(this.color).backgroundColor(Color.Orange)
+        .onClick(() => {
+          this.changeOrientation(false);
+        })
+    }
+    .width('100%').height('100%')
   }
 }
