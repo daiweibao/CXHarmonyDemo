@@ -15,6 +15,7 @@
     "pages/CXTabsMainPage",
     "pages/CXNavigationTestPage",
     "pages/FlexTestPage",
-    "pages/XiangDuiBuJuPage"
+    "pages/XiangDuiBuJuPage",
+    "pages/CXStackTestPage"
   ]
 }

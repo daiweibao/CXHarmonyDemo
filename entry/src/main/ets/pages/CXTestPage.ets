@@ -1,3 +1,4 @@
+
 // Stage模型下的示例：
 import mediaquery from '@ohos.mediaquery';
 import window from '@ohos.window';
