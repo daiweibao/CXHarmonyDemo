@@ -16,6 +16,8 @@
     "pages/CXNavigationTestPage",
     "pages/FlexTestPage",
     "pages/XiangDuiBuJuPage",
-    "pages/CXStackTestPage"
+    "pages/CXStackTestPage",
+    "pages/LazyForEachListPage",
+    "pages/GridTestPage"
   ]
 }
