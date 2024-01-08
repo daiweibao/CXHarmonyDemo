@@ -18,6 +18,8 @@
     "pages/XiangDuiBuJuPage",
     "pages/CXStackTestPage",
     "pages/LazyForEachListPage",
-    "pages/GridTestPage"
+    "pages/GridTestPage",
+    "pages/SwiperTestPage",
+    "pages/ScrollTestPage"
   ]
 }
