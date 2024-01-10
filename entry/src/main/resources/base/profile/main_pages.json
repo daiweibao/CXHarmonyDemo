@@ -21,6 +21,8 @@
     "pages/GridTestPage",
     "pages/SwiperTestPage",
     "pages/ScrollTestPage",
-    "pages/RefreshTestPage"
+    "pages/RefreshTestPage",
+    "pages/WebTestPage",
+    "pages/WebJiaoHuTestPage"
   ]
 }

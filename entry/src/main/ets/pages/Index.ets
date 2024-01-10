@@ -25,7 +25,10 @@ struct CXHomePage  {
     new RouterInfo('pages/AnimationPage','小鱼动画案例'),
     new RouterInfo('pages/LifeCirePage','生命周期案例1'),
     new RouterInfo('pages/TestPage1','生命周期案例2'),
-    new RouterInfo('pages/DocumentListPage','多UIAbility跳转')
+    new RouterInfo('pages/DocumentListPage','多UIAbility跳转'),
+    new RouterInfo('pages/WebTestPage','web页面'),
+    new RouterInfo('pages/WebJiaoHuTestPage','web交互')
+
   ]
 
   tag: string = 'Index Page'
