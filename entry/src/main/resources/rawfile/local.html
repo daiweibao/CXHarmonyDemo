@@ -1,54 +1,9 @@
-<!--xxx.html-->
+<!-- call.html -->
 <!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebView Message Port Demo</title>
-</head>
 <body>
-<h1>WebView Message Port Demo</h1>
 <div>
-    <input type="button" value="发消息给sts" onclick="PostMsgToEts(msgFromJS.value);"/><br/>
-    <input id="msgFromJS" type="text" value="将此消息从HTML发送到ets"/><br/>
+    <a href="tel://xxx xxxx xxx">拨打电话</a>
 </div>
-<p class="output">显示从ets接收到的消息</p>
 </body>
-<script>
-var h5Port;
-var output = document.querySelector('.output');
-window.addEventListener('message', function (event) {
-    if (event.data === '__init_port__') {
-        if (event.ports[0] !== null) {
-            h5Port = event.ports[0]; // 1. 保存从ets侧发送过来的端口
-            h5Port.onmessage = function (event) {
-              // 2. 接收ets侧发送过来的消息.
-              var msg = 'Got message from ets:';
-              var result = event.data;
-              if (typeof(result) === 'string') {
-                console.info(`received string message from html5, string is: ${result}`);
-                msg = msg + result;
-              } else if (typeof(result) === 'object') {
-                if (result instanceof ArrayBuffer) {
-                  console.info(`received arraybuffer from html5, length is: ${result.byteLength}`);
-                  msg = msg + 'lenght is ' + result.byteLength;
-                } else {
-                  console.info('not support');
-                }
-              } else {
-                console.info('not support');
-              }
-              output.innerHTML = msg;
-            }
-        }
-    }
-})
-// 3. 使用h5Port往ets侧发送消息.
-function PostMsgToEts(data) {
-    if (h5Port) {
-      h5Port.postMessage(data);
-    } else {
-      console.error('h5Port is null, Please initialize first');
-    }
-}
-</script>
 </html>
