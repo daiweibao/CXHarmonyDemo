@@ -6,7 +6,9 @@
         //网络权限
         "name": "ohos.permission.INTERNET",
         //地理位置权限
-        "name": "ohos.permission.LOCATION"
+        "name": "ohos.permission.LOCATION",
+
+        "name": "ohos.permission.GET_NETWORK_INFO"
       }
     ],
     "name": "entry",

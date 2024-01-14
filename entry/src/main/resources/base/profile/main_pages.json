@@ -23,6 +23,7 @@
     "pages/ScrollTestPage",
     "pages/RefreshTestPage",
     "pages/WebTestPage",
-    "pages/WebJiaoHuTestPage"
+    "pages/WebJiaoHuTestPage",
+    "pages/HttpTestPage"
   ]
 }
