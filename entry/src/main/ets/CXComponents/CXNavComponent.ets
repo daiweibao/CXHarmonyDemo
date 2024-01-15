@@ -29,18 +29,19 @@ export struct CXNavView {
 
         })
 
-
-      if (this.params && this.navTitle){
-        Text(this.params.id+'.'+this.navTitle)
+      if (this.navTitle){
+        Text(this.navTitle)
           .fontSize(30)
           .fontWeight(FontWeight.Bold)
-
+          .margin({left:10})
       }
       Blank()//空白组件
       Image($r('app.media.ic_public_refresh'))
         .width(30)
     }
     .width('100%')
-    .height(30)
+    .height(64)
+    .padding({left:15,right:15})
+    .justifyContent(FlexAlign.SpaceBetween)
   }
 }

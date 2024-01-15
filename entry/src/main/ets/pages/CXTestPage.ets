@@ -1,36 +1,30 @@
 // xxx.ets
 @Entry
 @Component
-struct Index {
-  @Builder MenuBuilder() {
-    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Button('Test ContextMenu1')
-      Divider().strokeWidth(2).margin(5).color(Color.Black)
-      Button('Test ContextMenu2')
-      Divider().strokeWidth(2).margin(5).color(Color.Black)
-      Button('Test ContextMenu3')
-    }
-    .width(200)
-    .height(160)
-  }
-
+struct WebComponent {
+  controller:WebController = new WebController();
   build() {
-    Flex({ direction: FlexDirection.Column, alignItems: ItemAlign.Center, justifyContent: FlexAlign.Center }) {
-      Column() {
-        Text("Test ContextMenu")
-          .fontSize(20)
-          .width('100%')
-          .height(500)
-          .backgroundColor(0xAFEEEE)
-          .textAlign(TextAlign.Center)
-      }
-      .bindContextMenu(this.MenuBuilder, ResponseType.LongPress)
-      .onDragStart(()=>{
-        // 拖拽时关闭菜单
-        ContextMenu.close()
-      })
+    Column() {
+      Web({ src:$rawfile('local.html'), controller:this.controller })
+        .onConfirm((event) => {//网页警告弹窗事件
+          AlertDialog.show({
+            title: '标题',
+            message: event.message,//消息
+            confirm: {
+              value: 'onAlert',
+              action: () => {
+                //如果确认对话框，处理用户的JavaScript结果
+                event.result.handleConfirm();
+              }
+            },
+            cancel: () => {
+              //如果取消对话框，处理用户的JavaScript结果
+              event.result.handleCancel();
+            }
+          })
+          //当onConfirm回调返回false时，触发默认弹窗。当回调返回true时，系统应用可以调用系统弹窗能力（包括确认和取消），并且需要根据用户的确认或取消操作调用JsResult通知Web组件。
+          return true;
+        })
     }
-    .width('100%')
-    .height('100%')
   }
 }

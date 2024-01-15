@@ -3,13 +3,20 @@
     //requestPermissions该标签标识应用运行时需向系统申请的权限集合。
     "requestPermissions": [
       {
-        //网络权限
-        "name": "ohos.permission.INTERNET",
-        //地理位置权限
-        "name": "ohos.permission.LOCATION",
-
-        "name": "ohos.permission.GET_NETWORK_INFO"
-      }
+        //system_grant：系统授权
+        "name": "ohos.permission.INTERNET", //网络权限
+      },
+//      {
+//        //user_grant：用户授权
+//        "name" : "ohos.permission.LOCATION",//地理位置权限
+//        "reason": "为了方便给你推荐附近的商家，我们需要你的位置权限",//描述申请权限的原因
+//        "usedScene": {//描述权限使用的场景和时机
+//          "abilities": [//标识需要使用到该权限的Ability，标签为数组形式。适用模型：Stage模型
+//            "EntryAbility"
+//          ],
+//          "when":"always"//标识权限使用的时机，值为inuse/always。inuse：表示为仅允许前台使用。always：表示前后台都可使用
+//        }
+//      }
     ],
     "name": "entry",
     "type": "entry",

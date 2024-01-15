@@ -28,7 +28,9 @@ struct CXHomePage  {
     new RouterInfo('pages/DocumentListPage','多UIAbility跳转'),
     new RouterInfo('pages/WebTestPage','web页面'),
     new RouterInfo('pages/WebJiaoHuTestPage','web交互'),
-    new RouterInfo('pages/HttpTestPage','网络请求')
+    new RouterInfo('pages/HttpTestPage','网络请求'),
+    new RouterInfo('pages/ShopPage','商铺列表')
+
   ]
 
   tag: string = 'Index Page'
