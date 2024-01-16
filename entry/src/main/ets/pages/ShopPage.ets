@@ -3,13 +3,14 @@ import { CXNavView } from '../CXComponents/CXNavComponent'
 import ShopInfo from '../ViewModel/ShopInfo'
 import ShopItem from '../Views/ShopItem'
 import shopModel from '../model/ShopModel'
+import promptAction from '@ohos.promptAction'
 
 
 
 @Entry
 @Component
 struct ShopPage {
-  @State shops: ShopInfo[] = []
+  @State shopArray: Array<ShopInfo> = []
 
   aboutToAppear(){
     //加载商品数据
@@ -20,7 +21,7 @@ struct ShopPage {
     Column({space: 10}) {
       CXNavView({navTitle:'商铺列表'})
       List({space: 10}) {
-        ForEach(this.shops, shop => {
+        ForEach(this.shopArray, shop => {
           ListItem(){
             ShopItem({shop:shop})
               .width('100%')
@@ -34,6 +35,9 @@ struct ShopPage {
       .layoutWeight(1)
       .width('100%')
       .backgroundColor('#EDEDEC')
+      .onReachEnd(() => {
+        //滑动到了底部
+      })
     }
     .width('100%')
     .height('100%')
@@ -43,10 +47,18 @@ struct ShopPage {
   loadShopInfo(){
     // TODO 加载数据
     shopModel.getShopList()
-    .then(shops => {
-     this.shops = shops
-      console.info('请求结果：',shops)
+    .then(data => {
+      // let sho:ShopInfo = JSON.parse(data)
+      let sho:ShopInfo =data
+     // this.shopArray = shop
 
+      let  ttt = sho.weatherinfo.weather
+
+      console.log('控制器里请求结果：',JSON.stringify(data))
+
+      promptAction.showToast({message:'数据请求结束'+JSON.parse(data)})
+
+      console.log('控制器里请求结果weather：',ttt)
     })
 
     // let shops = [
@@ -74,4 +86,9 @@ struct ShopPage {
   }
 
 }
+
+
+
+
+
 

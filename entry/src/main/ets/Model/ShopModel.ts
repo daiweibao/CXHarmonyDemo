@@ -1,5 +1,5 @@
 import http from '@ohos.net.http';
-import ShopInfo from '../ViewModel/ShopInfo';
+// import ShopInfo from '../ViewModel/ShopInfo';
 class ShopModel {
 
   //请求接口：天气接口（GET）： http://weatherapi.market.xiaomi.com/wtr-v2/temp/realtime?
@@ -9,10 +9,9 @@ class ShopModel {
     "cityId": "101040100"//城市Id
   }
 
-  getShopList(): Promise<ShopInfo[]> {
+  getShopList(): Promise<any> {
     //resonlve是成功的通知，reject是失败的通知
     return new Promise((resonlve, reject) => {
-
       //创建网络请求
       let httpRequest = http.createHttp();
       httpRequest.request(
@@ -39,6 +38,7 @@ class ShopModel {
             //json字符串转对象
             //成功后异步回调
             resonlve(JSON.parse(data.result.toString()))
+            // resonlve(JSON.parse(data.result.toString()))
             console.info('数据请求成功')
 
           }else {
@@ -64,5 +64,6 @@ class ShopModel {
 }
 
 const shopModel = new ShopModel()
+// as：用于重命名输出和输入接口。
+export default shopModel as   ShopModel
 
-export default shopModel as ShopModel

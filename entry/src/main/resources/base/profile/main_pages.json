@@ -26,6 +26,8 @@
     "pages/WebJiaoHuTestPage",
     "pages/HttpTestPage",
     "pages/HttpGoodsListPage",
-    "pages/ShopPage"
+    "pages/ShopPage",
+    "pages/CXTestPage"
+
   ]
 }

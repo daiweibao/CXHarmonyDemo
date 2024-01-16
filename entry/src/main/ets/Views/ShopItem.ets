@@ -7,7 +7,7 @@ export default struct ShopItem {
   build(){
     Column({space: 10}){
       //文本
-      Text(this.shop.name)
+      Text(this.shop.weatherinfo.weather)
         .fontSize(20)
         .fontWeight(FontWeight.Bold)
         .textAlign(TextAlign.Start)

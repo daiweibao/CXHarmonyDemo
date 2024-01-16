@@ -29,7 +29,8 @@ struct CXHomePage  {
     new RouterInfo('pages/WebTestPage','web页面'),
     new RouterInfo('pages/WebJiaoHuTestPage','web交互'),
     new RouterInfo('pages/HttpTestPage','网络请求'),
-    new RouterInfo('pages/ShopPage','商铺列表')
+    new RouterInfo('pages/ShopPage','商铺列表'),
+    new RouterInfo('pages/CXTestPage','测试')
 
   ]
 
