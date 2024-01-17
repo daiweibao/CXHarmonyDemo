@@ -27,7 +27,7 @@
     "pages/HttpTestPage",
     "pages/HttpGoodsListPage",
     "pages/ShopPage",
-    "pages/CXTestPage"
-
+    "pages/CXTestPage",
+    "pages/CXTestSonCompPage"
   ]
 }

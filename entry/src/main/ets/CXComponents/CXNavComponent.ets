@@ -36,8 +36,13 @@ export struct CXNavView {
           .margin({left:10})
       }
       Blank()//空白组件
+
       Image($r('app.media.ic_public_refresh'))
         .width(30)
+        .onClick(()=>{
+          //点击刷新
+          
+        })
     }
     .width('100%')
     .height(64)
