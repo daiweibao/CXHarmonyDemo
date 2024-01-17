@@ -7,7 +7,7 @@ import {CXHttpToolPromise} from '../CXComponents/CXTestSonComp'
 struct CXTestPage {
   build() {
     Column() {
-      Text('点击回调数据')
+      Button('点击回调数据')
         .onClick(()=>{
           //点击调用异步函数
           CXHttpToolPromise.then(value => {

@@ -18,11 +18,7 @@ struct CXTestSonCompPage {
 
   build() {
     Column() {
-      //自定义子组件：把监听异步回调函数传进去（监听按钮点击事件）
-      CXTestSonComp({onTaskChange:this.handleTaskChange})
-        .height(200)
-        .width(200)
-        .backgroundColor(Color.Red)
+
     }
     .width('100%')
     .height('100%')
