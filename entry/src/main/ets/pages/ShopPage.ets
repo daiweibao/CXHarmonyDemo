@@ -2,10 +2,9 @@
 import { CXNavView } from '../CXComponents/CXNavComponent'
 import ShopInfo from '../ViewModel/ShopInfo'
 import ShopItem from '../Views/ShopItem'
-import shopModel from '../model/ShopModel'
-import promptAction from '@ohos.promptAction'
 
-
+import httpTools from '../Model/CXHttpTools'
+import data from '@ohos.telephony.data'
 
 @Entry
 @Component
@@ -13,7 +12,7 @@ struct ShopPage {
   @State shopArray: Array<ShopInfo> = []
 
   aboutToAppear(){
-    //加载商品数据
+    //加载网络数据
     this.loadShopInfo()
   }
 
@@ -44,47 +43,37 @@ struct ShopPage {
     .backgroundColor(Color.White)
   }
 
+  //网络数据
   loadShopInfo(){
     // TODO 加载数据
-    shopModel.getShopList()
-    .then(data => {
-      // let sho:ShopInfo = JSON.parse(data)
-      let sho:ShopInfo =data
-     // this.shopArray = shop
+    let path = 'http://weatherapi.market.xiaomi.com/wtr-v2/temp/realtime?'
+    let parm = {'cityId':'101040100'}
 
-      let  ttt = sho.weatherinfo.weather
+    //发起网络请求
+    httpTools.postWithURL(path,parm).then(data => {
+      console.log('控制器里请求结果：',data)
+      //第1条数据
+      let shopModel: ShopInfo = JSON.parse(data.toString())
+      //标题
+      shopModel.name = `天气：${shopModel.weatherinfo.weather}`
+      //描述
+      shopModel.content = '这是今天的天气情况，还是挺不错的啊'
+      //图片
+      shopModel.image = 'https://upload-images.jianshu.io/upload_images/1521667-aa76f7b8b3efec86.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/606'
+      this.shopArray.push(shopModel)
 
-      console.log('控制器里请求结果：',JSON.stringify(data))
+      //第2条数据
+      let shopModel2: ShopInfo = JSON.parse(data.toString())
+      //名字
+      shopModel2.name = `风向：${shopModel.weatherinfo.WD}`
+      //描述
+      shopModel2.content = '今天风力比较大，不太适合出去玩呀'
+      //图片
+      shopModel2.image = 'https://upload-images.jianshu.io/upload_images/1521667-d1f70564b2a6c187?imageMogr2/auto-orient/strip%7CimageView2/2/w/640'
+      this.shopArray.push(shopModel2)
 
-      promptAction.showToast({message:'数据请求结束'+JSON.parse(data)})
-
-      console.log('控制器里请求结果weather：',ttt)
     })
-
-    // let shops = [
-    //   {
-    //     id:6,
-    //     name:'幸福里老北京刷肉火锅（鼓楼大街店）',
-    //     content:'这是一家有百年历史的老北京火锅，大家喜欢的赶紧去吃',
-    //     images:[
-    //       'https://upload-images.jianshu.io/upload_images/1521667-aa76f7b8b3efec86.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/606',
-    //       'https://upload-images.jianshu.io/upload_images/1521667-d1f70564b2a6c187?imageMogr2/auto-orient/strip%7CimageView2/2/w/640'
-    //     ]
-    //   },
-    //   {
-    //     id:7,
-    //     name:'海底捞（北苑路店）',
-    //     content:'这是一家连锁店火锅',
-    //     images:[
-    //       'https://upload-images.jianshu.io/upload_images/1521667-e7aac24d1ace30eb?imageMogr2/auto-orient/strip%7CimageView2/2/w/640',
-    //       'https://upload-images.jianshu.io/upload_images/1521667-b5d6735aba47fa2b?imageMogr2/auto-orient/strip%7CimageView2/2/w/640'
-    //     ]
-    //   }
-    // ]
-    // this.shops = shops
-
   }
-
 }
 
 

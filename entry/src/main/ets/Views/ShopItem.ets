@@ -7,14 +7,14 @@ export default struct ShopItem {
   build(){
     Column({space: 10}){
       //文本
-      Text(this.shop.weatherinfo.weather)
+      Text(this.shop.name)
         .fontSize(20)
         .fontWeight(FontWeight.Bold)
         .textAlign(TextAlign.Start)
 
       Row({space:10}){
         //图片
-        Image(this.shop.images[0])
+        Image(this.shop.image)
           .width(100)
           .height(100)
 
