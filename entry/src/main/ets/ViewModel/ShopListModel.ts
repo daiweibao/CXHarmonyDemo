@@ -1,15 +1,20 @@
-
-export default class ShopInfo {
+//数据模型
+export default class ShopListModel {
+  //id
   id: number
+  //标题
   name: string = ''
+  //描述
   content: string = ''
+  //图片
   image: string = ''
-
   //接口字段
   weatherinfo: weatherinfo
 }
 class weatherinfo{
+  //风向
   WD:string = ''
+  //天气
   weather:string = ''
 }
 

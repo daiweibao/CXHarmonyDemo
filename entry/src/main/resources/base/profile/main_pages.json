@@ -28,6 +28,7 @@
     "pages/HttpGoodsListPage",
     "pages/ShopPage",
     "pages/indexPage",
-    "pages/CXTestSonCompPage"
+    "pages/CXTestSonCompPage",
+    "pages/CXTestPage"
   ]
 }
