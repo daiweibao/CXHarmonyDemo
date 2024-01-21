@@ -25,11 +25,13 @@ struct CXTestPage {
 
   build() {
     Column() {
-      Button('点击回调数据')
+      Button('点击回调数据啊')
         .onClick(()=>{
           //点击调用异步函数
           this.myAsyncFunction();
         })
+        .backgroundImageSize({"width":"0vp","height":"0vp"})
+        .backgroundColor('#ffff00ab')
     }
   }
 }

@@ -29,6 +29,7 @@
     "pages/ShopPage",
     "pages/indexPage",
     "pages/CXTestSonCompPage",
-    "pages/CXTestPage"
+    "pages/CXTestPage",
+    "pages/Video/VideoTestPage"
   ]
 }
