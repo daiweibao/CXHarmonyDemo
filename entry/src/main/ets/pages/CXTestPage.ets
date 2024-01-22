@@ -1,76 +1,60 @@
-import NotificationManager from '@ohos.notificationManager';//推送通知模块
-
-import image from '@ohos.multimedia.image';//全局导入Image模块。
-
-import common from '@ohos.app.ability.common';
-import promptAction from '@ohos.promptAction';
+import notification from '@ohos.notificationManager';//通知模块
+import image from '@ohos.multimedia.image';//图片处理模块
 
 @Entry
 @Component
-struct FocusableExample {
+struct NotificationTest1 {
 
-  @State message: string = ''
+  //得到pixelMap格式图片
+  async get_pixelmap(){
+    // 获取resourceManager资源管理
+    const context = getContext(this)
+    const resourceMgr = context.resourceManager
+    // 获取media文件夹下的watchGT4.png图片
+    const fileData = await resourceMgr.getMediaContent($r('app.media.watchGT4'))
+    const buffer = fileData.buffer
+    // 创建imageSource
+    const imageSource = image.createImageSource(buffer)
+    // 创建PixelMap
+    const pixelMap = await imageSource.createPixelMap()
+    return pixelMap
+  }
+
+  //发送图片通知
+  async publishPictureNotification() {
+    //异步获取PixelMap格式的图片
+    let pixelMap = await this.get_pixelmap()
+
+    let notificationRequest: notification.NotificationRequest = { // 描述通知的请求
+      id: 1,
+      content: {
+        contentType: notification.ContentType.NOTIFICATION_CONTENT_PICTURE,//图片类型通知
+        picture: {
+          title: '好物热销中', // 通知内容标题
+          text: '展开查看详情', // 通知内容
+          expandedTitle: '今日热门推荐', // 通知展开时的内容标题
+          briefText: '这里一定有您喜欢的', // 通知概要内容，是对通知内容的总结
+          picture: pixelMap // 通知的图片内容
+        }
+      }
+    }
+    notification.publish(notificationRequest).then(() => { // 发布通知
+      console.info('推送成功');
+    }).catch((err) => {
+      console.error(`推送失败:${err.code}, message:${err.message}`);
+    });
+  }
 
   build() {
-    Scroll() {
-      Column({ space: 20 }) {
-        Text(this.message)
-        // $r('app.media.chaoxiheader')
-        Button('发布通知').onClick(async  (event: ClickEvent) => {
-          const context = getContext(this);
-          // 获取resourceManager资源管理
-          const resourceMgr = context.resourceManager;
-          const fileData = await resourceMgr.getRawFileContent('chaoxiimage.png');
-          // 获取图片的ArrayBuffer
-          const buffer = fileData.buffer;
-
-          console.log('图片地址：'+fileData)
-
-
-          promptAction.showToast({message:`${fileData.toString()}`})
-
-
-
-
-          // let imagePixelMap: PixelMap = undefined; // 需要获取图片PixelMap信息
-          // let notificationRequest = {
-          //   id: 1,
-          //   content: {
-          //     contentType: NotificationManager.ContentType.NOTIFICATION_CONTENT_PICTURE,//图片类型通知
-          //     picture: {
-          //       title: '我是通知标题',//通知标题
-          //       text: '我是通知内容',//通知内容
-          //       additionalText: '通知附加内容',//通知附加内容，是对通知内容的补充。
-          //       briefText: '通知概要内容',//通知概要内容，是对通知内容的总结。
-          //       expandedTitle: '通知展开时的标题',//通知展开时的标题。
-          //       picture: imagePixelMap//通知的图片内容
-          //     }
-          //   }
-          // };
-          //
-          // // 发布通知
-          // NotificationManager.publish(notificationRequest, (err) => {
-          //   if (err) {
-          //     console.error(`Failed to publish notification. Code is ${err.code}, message is ${err.message}`);
-          //     return;
-          //   }
-          //   console.info('图片通知发送成功');
-          // });
-
-
-
-
-
-
-
+    Column() {
+      Button('发送大图通知')
+        .onClick(() => {
+          this.publishPictureNotification()
 
         })
-
-
-
-
-
-      }.alignItems(HorizontalAlign.Center)
     }
+    .width('100%')
   }
 }
+
+

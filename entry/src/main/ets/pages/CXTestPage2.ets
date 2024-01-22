@@ -9,6 +9,9 @@ struct CXTestPage2 {
   build() {
     Row() {
       Column() {
+
+        // Image('love.jpg')
+
         Text(this.message)
           .fontSize(50)
           .fontWeight(FontWeight.Bold)
