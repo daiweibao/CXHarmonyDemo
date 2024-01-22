@@ -30,6 +30,7 @@
     "pages/indexPage",
     "pages/CXTestSonCompPage",
     "pages/CXTestPage",
-    "pages/Video/VideoTestPage"
+    "pages/Video/VideoTestPage",
+    "pages/CXTestPage2"
   ]
 }
