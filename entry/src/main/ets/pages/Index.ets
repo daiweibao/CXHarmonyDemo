@@ -33,6 +33,8 @@ struct CXHomePage  {
     new RouterInfo('pages/CXTestPage','测试'),
     new RouterInfo('pages/indexPage','测试2'),
     new RouterInfo('pages/Video/VideoTestPage','视频'),
+    new RouterInfo('pages/PhotosPage','照片选择'),
+
 
   ]
 
