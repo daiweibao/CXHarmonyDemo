@@ -32,6 +32,7 @@
     "pages/CXTestPage",
     "pages/Video/VideoTestPage",
     "pages/CXTestPage2",
-    "pages/PhotosPage"
+    "pages/PhotosPage",
+    "pages/SaveFileTestPage"
   ]
 }

@@ -34,7 +34,7 @@ struct CXHomePage  {
     new RouterInfo('pages/indexPage','测试2'),
     new RouterInfo('pages/Video/VideoTestPage','视频'),
     new RouterInfo('pages/PhotosPage','照片选择'),
-
+    new RouterInfo('pages/SaveFileTestPage','保存文件'),
 
   ]
 
@@ -68,9 +68,9 @@ struct CXHomePage  {
     Column(){
 
       Text(this.message)
-        .fontSize(50)
+        .fontSize(15)
         .fontWeight(FontWeight.Bold)
-        .height(80)
+        .height(20)
 
       List({space: 15}){
         ForEach(
@@ -94,17 +94,17 @@ struct CXHomePage  {
   RouterItem(r: RouterInfo, i: number){
     Row(){
       Text(i + '.')
-        .fontSize(20)
+        .fontSize(14)
         .fontColor(Color.White)
 
       Blank()
 
       Text(r.title)
-        .fontSize(20)
+        .fontSize(14)
         .fontColor(Color.White)
     }
     .width('90%')
-    .padding(12)
+    .padding(5)
     .backgroundColor('#38f')
     .borderRadius(20)
     .shadow({radius: 6, color: '#4F000000', offsetX: 2, offsetY: 2})
