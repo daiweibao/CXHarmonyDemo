@@ -3,6 +3,8 @@ import picker from '@ohos.file.picker';//导入选择器模块和文件管理模
 
 import fs from '@ohos.file.fs';//通过沙箱路径获取图片的文件描述符，导入@ohos.file.fs模块
 import image from '@ohos.multimedia.image';//导入Image模块，图片解码
+import statvfs from '@ohos.file.statvfs';
+import storageStatistics from "@ohos.file.storageStatistics";
 
 @Entry
 @Component
@@ -53,12 +55,40 @@ struct Index {
     return pixelMap
   }
 
+  //获取指定文件系统的总空间大小（单位为Byte）。
+  getMyAppFreeAllSize(){
+    let path = "/data";
+    statvfs.getTotalSize(path, (err, number) => {
+      if (err) {
+        console.error(`调用getFreeSize失败, code is ${err.code}, message is ${err.message}`);
+      } else {
+        console.info(`指定文件系统的总空间大小是：${number}`);
+      }
+    });
+  }
+
+  //获取当前应用的存储空间大小（单位为Byte）。
+  getMyAppSize(){
+    storageStatistics.getCurrentBundleStats((err, bundleStats) => {
+      if (err) {
+        console.error(`调用getCurrentBundleStats失败, code is ${err.code}, message is ${err.message}`);
+      } else {
+        console.info(`当前应用的存储空间大小是：${bundleStats.appSize}`);
+      }
+    });
+  }
+
+
   // 使用imgDatas的url加载图片。
   build() {
     Column() {
       Button('打开相册').onClick((event: ClickEvent) => {
         //打开图库
         this.getAllImg();
+      })
+      Button('获取内存大小').onClick((event: ClickEvent) => {
+        // this.getMyAppFreeSize()
+        this.getMyAppSize()
       })
       // Button('展示照片').onClick(async (event: ClickEvent) => {
       //   //获取pixelMap格式图片

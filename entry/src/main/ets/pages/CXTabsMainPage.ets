@@ -39,7 +39,7 @@ struct CXTabsMainPage {
       this.currentIndex = index
     })
     .barWidth('100%') // 设置TabBar宽度
-    .barHeight(60) // 设置TabBar高度
+    .barHeight(160) // 设置TabBar高度
     .width('100%') // 设置Tabs组件宽度
     .height('100%') // 设置Tabs组件高度
     .backgroundColor(Color.Red) // 设置Tabs组件背景颜色
