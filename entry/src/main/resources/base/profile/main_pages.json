@@ -33,6 +33,7 @@
     "pages/Video/VideoTestPage",
     "pages/CXTestPage2",
     "pages/PhotosPage",
-    "pages/SaveFileTestPage"
+    "pages/SaveFileTestPage",
+    "pages/AxiosTestPage"
   ]
 }
