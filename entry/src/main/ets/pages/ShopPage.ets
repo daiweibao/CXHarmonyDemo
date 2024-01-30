@@ -2,7 +2,7 @@
 import { CXNavView } from '../CXComponents/CXNavComponent'//导航栏封装
 import shopListModel from '../ViewModel/ShopListModel'
 import ShopItem from '../Views/ShopItem'
-import httpTools from '../Model/CXHttpTools'
+import axiosTools from '../Model/CXHttpToolsAxios'
 
 @Entry
 @Component
@@ -52,7 +52,8 @@ struct ShopPage {
     let parm = {'cityId':'101040100'}
 
     //发起网络请求
-    httpTools.postWithURL(path,parm).then(data => {
+    // httpTools.postWithURL(path,parm).then(data => {
+    axiosTools.postWithURL(path,parm).then(data => {
       console.log('控制器里请求结果：',data)
       //数据转模型：data数据转对象后用模型接收
       let shopModel: shopListModel = JSON.parse(data.toString())
@@ -80,7 +81,7 @@ struct ShopPage {
         this.dataSouce.push(shopModel2)
       }
     }).catch(err => {
-      console.log('请求失败：',String(err))
+      console.log('控制器请求失败：',String(err))
     })
   }
 }

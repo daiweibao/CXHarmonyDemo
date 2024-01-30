@@ -5,7 +5,7 @@ export struct CXNavView {
   //导航栏标题
   private navTitle: ResourceStr
 
-  @State params: any = router.getParams()
+  @State params: Object = router.getParams()
 
   build(){
     //标题

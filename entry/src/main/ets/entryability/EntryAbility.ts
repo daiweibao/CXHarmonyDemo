@@ -3,10 +3,14 @@ import hilog from '@ohos.hilog';
 import window from '@ohos.window';
 import promptAction from '@ohos.promptAction';
 
+//导入自定义用户首选项模块
+import PreferencesUtil from '../common/Utils/PreferencesUtil'
+
 export default class EntryAbility extends UIAbility {
-  onCreate(want, launchParam) {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    console.log('成功：'+want)
+  async onCreate(want, launchParam) {
+    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate running');
+    // 加载Preferences,用户首选项数据存储实例
+    await PreferencesUtil.loadPreference(this.context, 'MyPreferences')
   }
 
   onDestroy() {
