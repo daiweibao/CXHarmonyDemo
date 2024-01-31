@@ -10,7 +10,7 @@ export default class EntryAbility extends UIAbility {
   async onCreate(want, launchParam) {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate running');
     // 加载Preferences,用户首选项数据存储实例
-    await PreferencesUtil.loadPreference(this.context, 'MyPreferences')
+    await PreferencesUtil.loadPreference(this.context)
   }
 
   onDestroy() {

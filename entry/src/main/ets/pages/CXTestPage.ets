@@ -12,7 +12,7 @@ struct TextTimerExample {
 
   async aboutToAppear(){
     //读取：后面是默认值
-    this.fontSize = await PreferencesUtil.getPreferenceValue('MyPreferences', 'IndexFontsize', 16) as number
+    this.fontSize = await PreferencesUtil.getPreferenceValue('IndexFontsize', 16) as number
   }
 
   build() {
@@ -44,7 +44,7 @@ struct TextTimerExample {
           this.textTimerController.reset()
 
           //写入数据
-          PreferencesUtil.putPreferenceValue('MyPreferences', 'IndexFontsize', 20)
+          PreferencesUtil.putPreferenceValue('IndexFontsize', 20)
 
         })
       }
