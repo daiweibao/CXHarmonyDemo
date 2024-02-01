@@ -31,7 +31,7 @@ struct CXHomePage  {
     new RouterInfo('pages/HttpTestPage','网络请求'),
     new RouterInfo('pages/ShopPage','商铺列表'),
     new RouterInfo('pages/CXTestPage','测试'),
-    new RouterInfo('pages/indexPage','测试2'),
+    new RouterInfo('pages/CXTestPage2','测试2'),
     new RouterInfo('pages/Video/VideoTestPage','视频'),
     new RouterInfo('pages/PhotosPage','照片选择'),
     new RouterInfo('pages/SaveFileTestPage','保存文件'),
