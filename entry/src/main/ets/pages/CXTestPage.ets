@@ -1,27 +1,29 @@
+import promptAction from '@ohos.promptAction'
 @Entry
 @Component
 struct ConditionCase {
-  @State showImg: boolean = false
-
   build() {
     Row() {
       Column() {
-        Toggle({
-          type: ToggleType.Switch,
-          isOn: this.showImg
-        })
-          .onChange((isON) => {
-            this.showImg = isON
-          })
-        if(this.showImg) {
-          Image('/images/iOS12.png')
-            .width(150)
-            .height(150)
-        }
-
+        HmCommentItemCX({ changeLike: (obj: string) => {
+           promptAction.showToast({message:`回传了数据：${obj}`})
+        }})
       }
       .width('100%')
     }
     .height('100%')
+  }
+}
+
+@Component
+struct HmCommentItemCX {
+  changeLike: (params: string) => void = () => {}
+  build() {
+     Column(){
+       Button('回复').onClick((event: ClickEvent) => {
+         //子组件里点击回传数据
+         this.changeLike('数据异步回传')
+       })
+     }.height('100%').width('100%')
   }
 }
