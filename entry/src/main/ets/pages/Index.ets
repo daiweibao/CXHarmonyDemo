@@ -35,6 +35,8 @@ struct CXHomePage  {
     new RouterInfo('pages/Video/VideoTestPage','视频'),
     new RouterInfo('pages/PhotosPage','照片选择'),
     new RouterInfo('pages/SaveFileTestPage','保存文件'),
+    new RouterInfo('pages/ZhiHuPinLunPage','知乎评论')
+
 
   ]
 
