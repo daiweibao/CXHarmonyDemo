@@ -36,6 +36,7 @@
     "pages/SaveFileTestPage",
     "pages/AxiosTestPage",
     "pages/ZhiHuPinLunPage",
-    "pages/LoadingCase"
+    "pages/LoadingCase",
+    "pages/MeiTuan/CXMeiTuanPage"
   ]
 }
