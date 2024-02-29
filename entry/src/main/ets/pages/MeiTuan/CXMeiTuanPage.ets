@@ -1,13 +1,32 @@
+import http from '@ohos.net.http'
+
 @Entry
 @Component
 struct CXMeiTuanPage {
   //是否显示购物车
   @State showCart: boolean = false
+  @State list: Category[] = [] // 声明数据结构
+  //获取数据，蒋数据动态渲染
+  aboutToAppear(){
+    //美团餐数据
+    this.getMTData()
+  }
+  async getMTData(){
+    try {
+      const req = http.createHttp()
+      const res = await req.request("https://zhoushugang.gitee.io/fe2022/takeaway.json")
+      //对象转模型
+      this.list = JSON.parse(res.result as string) as Category[]
+
+    } catch (error) {
+
+    }
+  }
 
   build() {
     Stack({alignContent:Alignment.Bottom}){
       //主内容器组件
-      MTMain()
+      MTMain({list:$list})
       if (this.showCart){
         //购物车组件
         MTCart()
@@ -50,6 +69,11 @@ struct MTCart {
           }
         })
       }
+      .divider({
+        strokeWidth: 0.5,
+        color: '#f5f5f5'
+      })
+      .padding({ left: 15, right: 15, bottom: 100 })
     }
     .height('50%')
     .width('100%')
@@ -60,8 +84,9 @@ struct MTCart {
 //主容器组件
 @Component
 struct MTMain {
-  @State list:string[] = ['一人套餐','特色烧烤','杂粮主食']
-  @State selectIndex: number = -1
+  @Link list:Category[]
+  // @State list:string[] = ['一人套餐','特色烧烤','杂粮主食']
+  @State selectIndex: number = 0
   build() {
     Column(){
       //顶部导航
@@ -70,8 +95,8 @@ struct MTMain {
       Row(){
         //左侧分类
         Column(){
-          ForEach(this.list,(item: string, index: number)=> {
-            Text(item)
+          ForEach(this.list,(item: Category, index: number)=> {
+            Text(item.name)
               .height(50)
               .width('100%')
               .fontSize(14)
@@ -87,28 +112,12 @@ struct MTMain {
         .backgroundColor('#f5f5f5')
         //右侧是内容
         List(){
-          ListItem(){
-            MTFoodItem()
-          }
-          ListItem(){
-            MTFoodItem()
-          }
-          ListItem(){
-            MTFoodItem()
-          }
-          ListItem(){
-            MTFoodItem()
-          }
-          ListItem(){
-            MTFoodItem()
-          }
-          ListItem(){
-            MTFoodItem()
-          }
-
-          ListItem(){
-            MTFoodItem()
-          }
+          //数组元素不存在的时候处理（数据不存在用[]代替）：this.list[this.selectIndex]?.foods || []
+          ForEach(this.list[this.selectIndex]?.foods || [],(item:FoodItem,index:number)=>{
+            ListItem(){
+              MTFoodItem({item:item})
+            }
+          })
         }
         .layoutWeight(1)
         .scrollBar(BarState.Auto)
@@ -181,35 +190,36 @@ struct MTNav {
 // 主页的结构的菜品单项组件
 @Component
 struct MTFoodItem {
+  item:Partial<FoodItem> = {}
   build() {
     Row() {
-      Image('https://zqran.gitee.io/images/waimai/8078956697.jpg')
+      Image(this.item.picture)
         .width(90)
         .aspectRatio(1)
       Column({ space: 5 }) {
-        Text('小份酸汤莜面鱼鱼+肉夹馍套餐')
+        Text(this.item.name)
           .textOverflow({
             overflow: TextOverflow.Ellipsis,////设置文本超出边界尾部省略号显示
           })
           .maxLines(2)//显示2行
           .fontWeight(600)
-        Text('酸汤莜面鱼鱼，主料：酸汤、莜面 肉夹馍，主料：白皮饼、猪肉')
+        Text(this.item.description)
           .textOverflow({
             overflow: TextOverflow.Ellipsis,
           })
           .maxLines(1)
           .fontSize(12)
           .fontColor('#333')
-        Text('点评网友推荐')
+        Text(this.item.unit)
           .fontSize(10)
           .backgroundColor('#fff5e2')
           .fontColor('#ff8000')
           .padding({ top: 2, bottom: 2, right: 5, left: 5 })
           .borderRadius(2)
         Text() {
-          Span('月销售40')
+          Span(`月销售${this.item.month_saled}`)
           Span(' ')
-          Span('好评度100%')
+          Span(this.item.like_ratio_desc)
         }
         .fontSize(12)
         .fontColor('#999')
@@ -219,7 +229,7 @@ struct MTFoodItem {
             Span('¥ ')
               .fontColor('#ff8000')
               .fontSize(10)
-            Span('34.23')
+            Span(this.item.price.toFixed(2))
               .fontColor('#ff8000')
               .fontWeight(FontWeight.Bold)
           }
@@ -256,17 +266,18 @@ struct MTCartItem {
           Text(){
             Span('￥')
               .fontSize(12)
-              .fontColor('#fff800')
+              .fontColor('#ff800')
             Span('34.33')
               .fontSize(24)
               .fontWeight(FontWeight.Bold)
-              .fontColor('#fff800')
+              .fontColor('#ff800')
           }
         }
         .justifyContent(FlexAlign.SpaceBetween)
         .width('100%')
       }
       .layoutWeight(1)
+      .justifyContent(FlexAlign.Start)
       .alignItems(HorizontalAlign.Start)
       .padding({ left: 10, right: 10 })
     }
@@ -348,4 +359,25 @@ struct MTBottom {
       bottom:20
     })
   }
+}
+
+//class类型
+class Category {
+  tag: string = ''
+  name: string = ''
+  foods: FoodItem[] = []
+}
+
+export class FoodItem {
+  id: number = 0
+  name: string = ""
+  like_ratio_desc: string = ""
+  month_saled: number = 0
+  unit: string = ""
+  food_tag_list: string[] = []
+  price: number = 0
+  picture: string = ""
+  description: string = ""
+  tag: string = ""
+  count: number = 0
 }
