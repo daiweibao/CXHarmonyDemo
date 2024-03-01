@@ -6,11 +6,21 @@ struct CXMeiTuanPage {
   //是否显示购物车
   @State showCart: boolean = false
   @State list: Category[] = [] // 声明数据结构
+  //购物车数据
+  @StorageLink('user_cart') @Watch('updateCartJSON') cartJSON : string = ''
+
+  @Provide cartList: FoodItem[] = []
+
   //获取数据，蒋数据动态渲染
   aboutToAppear(){
     //美团餐数据
     this.getMTData()
   }
+//监听到数据变化，更新购物车数据
+  updateCartJSON(){
+    this.cartList = getCarts()
+  }
+
   async getMTData(){
     try {
       const req = http.createHttp()
@@ -41,6 +51,7 @@ struct CXMeiTuanPage {
 //购物车组件
 @Component
 struct MTCart {
+  @Consume cartList: FoodItem[]
   build() {
     Column(){
       Row(){
@@ -62,7 +73,7 @@ struct MTCart {
       .justifyContent(FlexAlign.SpaceBetween)
 
       List({ space: 30 }) {
-        ForEach([1,2,3,4], () => {
+        ForEach(this.cartList, (item:FoodItem,index:number) => {
           ListItem() {
             MTCartItem()
           }
@@ -249,14 +260,15 @@ struct MTFoodItem {
 
 @Component
 struct MTCartItem {
+  item: Partial<FoodItem> = {}
   build(){
     Row(){
-      Image('https://zqran.gitee.io/images/waimai/7384994864.jpg')
+      Image(this.item.picture)
         .width(60)
         .aspectRatio(1)
         .borderRadius(8)
       Column({space:5}){
-        Text('腐恶费恶搞日光灯管个咕嘟咕嘟发光飞碟')
+        Text(this.item.name)
           .fontSize(14)
           .textOverflow({
             overflow:TextOverflow.Ellipsis
@@ -268,7 +280,7 @@ struct MTCartItem {
             Span('￥')
               .fontSize(12)
               .fontColor('#ff800')
-            Span('34.33')
+            Span(this.item.price.toFixed(2))
               .fontSize(24)
               .fontWeight(FontWeight.Bold)
               .fontColor('#ff800')
