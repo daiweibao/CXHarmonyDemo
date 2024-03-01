@@ -34,7 +34,6 @@ struct CXMeiTuanPage {
       //底部组件
       MTBottom({showCart:$showCart})
 
-
     }.height('100%')
   }
 }
@@ -233,6 +232,8 @@ struct MTFoodItem {
               .fontColor('#ff8000')
               .fontWeight(FontWeight.Bold)
           }
+          //加减号
+          MTAddCut({item:this.item})
         }
         .justifyContent(FlexAlign.SpaceBetween)
         .width('100%')
@@ -272,6 +273,9 @@ struct MTCartItem {
               .fontWeight(FontWeight.Bold)
               .fontColor('#ff800')
           }
+
+          //加减号
+          MTAddCut()
         }
         .justifyContent(FlexAlign.SpaceBetween)
         .width('100%')
@@ -361,6 +365,45 @@ struct MTBottom {
   }
 }
 
+//加减菜组件
+@Component
+struct MTAddCut {
+  item:Partial<FoodItem> = {}
+  build(){
+    Row({space:8}){
+      Row(){
+        Image($r('app.media.ic_screenshot_line'))
+          .width(10)
+          .aspectRatio(1)
+      }
+      .width(16)
+      .aspectRatio(1)
+      .justifyContent(FlexAlign.Center)
+      .backgroundColor('#fff')
+      .borderRadius(4)
+      .border({
+        width:0.5,
+        color:'#f8c74e'
+      })
+
+      Text('0').fontSize(14)
+      Row(){
+        Image($r('app.media.ic_public_add_filled'))
+          .width(10)
+          .aspectRatio(1)
+      }
+      .width(16)
+      .aspectRatio(1)
+      .justifyContent(FlexAlign.Center)
+      .backgroundColor('#f8c74e')
+      .borderRadius(4)
+      .onClick(()=>{
+        addCutCart('add',this.item as FoodItem)
+      })
+    }
+  }
+}
+
 //class类型
 class Category {
   tag: string = ''
@@ -381,3 +424,47 @@ export class FoodItem {
   tag: string = ""
   count: number = 0
 }
+
+
+//持久化购物车数据
+PersistentStorage.PersistProp<string>('user_cart', '[]')
+
+//加减购物车的方法
+const addCutCart = (type: 'add' | 'cut', item:FoodItem)=>{
+  const list = getCarts()
+  const f = list.find(f => f.id === item.id)//找元素
+  if (type==='add'){
+    //加
+    if (f){
+      //找到了
+      f.count++
+    }else {
+      item.count=1
+      list.unshift(item)//在第一诶插入一个数组元素
+    }
+  }else {
+    //减
+    if (f && f.count>0){
+      f.count--
+      if (f.count===0){
+        //从购物车中移除菜品
+        const index = list.findIndex(ff => ff.id === item.id)
+        //移除菜品数据
+        list.splice(index,1)
+      }
+    }
+  }
+  //list发生变化或者没发生，都要写入磁盘
+  AppStorage.Set<string>('user_cart', JSON.stringify(list))
+
+  AlertDialog.show({
+    message:AppStorage.Get<string>('user_cart')
+  })
+
+}
+
+//获取购物车里面所有数据
+const getCarts = ()=>{
+  return JSON.parse( AppStorage.Get<string>('user_cart' || '[]')) as FoodItem[]
+}
+
