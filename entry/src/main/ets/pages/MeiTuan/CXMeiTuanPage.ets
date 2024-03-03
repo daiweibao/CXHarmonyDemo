@@ -15,6 +15,8 @@ struct CXMeiTuanPage {
   aboutToAppear(){
     //美团餐数据
     this.getMTData()
+    //初始化监听方法
+    this.updateCartJSON()
   }
 //监听到数据变化，更新购物车数据
   updateCartJSON(){
@@ -60,6 +62,10 @@ struct MTCart {
         Text('清空购物车')
           .fontSize(12)
           .fontColor('#999')
+          .onClick(()=>{
+            //清空购物车
+            cleaseCarts()
+          })
       }
       .width('100%')
       .height(40)
@@ -75,7 +81,7 @@ struct MTCart {
       List({ space: 30 }) {
         ForEach(this.cartList, (item:FoodItem,index:number) => {
           ListItem() {
-            MTCartItem()
+            MTCartItem({item:item})
           }
         })
       }
@@ -83,7 +89,7 @@ struct MTCart {
         strokeWidth: 0.5,
         color: '#f5f5f5'
       })
-      .padding({ left: 15, right: 15, bottom: 100 })
+      .padding({ left: 15, right: 15, bottom: 70 })
     }
     .height('50%')
     .width('100%')
@@ -287,7 +293,7 @@ struct MTCartItem {
           }
 
           //加减号
-          MTAddCut()
+          MTAddCut({item: this.item})
         }
         .justifyContent(FlexAlign.SpaceBetween)
         .width('100%')
@@ -305,12 +311,31 @@ struct MTCartItem {
 @Component
 struct MTBottom {
   @Link showCart: boolean
+
+  @Consume cartList: FoodItem[]
+
+  //购物车的总数量
+  getAllCount(){
+    //计算数组里count字段的总数：cartList是数组，item.count是商品数量;后面0表示preValve默认值从0开始
+   return this.cartList.reduce((preValve:number, item:FoodItem)=>{
+      return preValve +item.count
+    },0)
+  }
+
+  //购物车的总价格
+  getAllPricr(){
+    //计算数组里count字段的总数：cartList是数组，item.count是商品数量;后面0表示preValve默认值从0开始
+    return this.cartList.reduce((preValve:number, item:FoodItem)=>{
+      return preValve + item.count * item.price
+    },0)
+  }
+
   build(){
     Row(){
       Row(){
         //角标组件
         Badge({
-          value:'1',
+          value:this.getAllCount().toString(),
           position:BadgePosition.Right,
           style:{
           badgeSize:18
@@ -334,7 +359,7 @@ struct MTBottom {
             Span('￥')
               .fontSize(12)
               .fontColor(Color.White)
-            Span('0.00')
+            Span(this.getAllPricr().toFixed(2))
               .fontSize(24)
               .fontColor(Color.White)
           }
@@ -380,7 +405,15 @@ struct MTBottom {
 //加减菜组件
 @Component
 struct MTAddCut {
+  @Consume cartList: FoodItem[]
   item:Partial<FoodItem> = {}
+
+  //获取要显示的数量
+  getContent(): number{
+   return this.cartList.find(obj => obj.id === this.item.id)?.count || 0
+  }
+
+
   build(){
     Row({space:8}){
       Row(){
@@ -397,8 +430,13 @@ struct MTAddCut {
         width:0.5,
         color:'#f8c74e'
       })
+      .visibility(this.getContent() ? Visibility.Visible : Visibility.Hidden)
+      .onClick(()=>{
+        addCutCart('cut',this.item as  FoodItem)
+      })
 
-      Text('0').fontSize(14)
+      Text(this.getContent().toString()).fontSize(14)
+        .visibility(this.getContent() ? Visibility.Visible : Visibility.Hidden)
       Row(){
         Image($r('app.media.ic_public_add_filled'))
           .width(10)
@@ -422,7 +460,7 @@ class Category {
   name: string = ''
   foods: FoodItem[] = []
 }
-
+//Category数据中嵌套的数据
 export class FoodItem {
   id: number = 0
   name: string = ""
@@ -469,9 +507,9 @@ const addCutCart = (type: 'add' | 'cut', item:FoodItem)=>{
   //list发生变化或者没发生，都要写入磁盘
   AppStorage.Set<string>('user_cart', JSON.stringify(list))
 
-  AlertDialog.show({
-    message:AppStorage.Get<string>('user_cart')
-  })
+  // AlertDialog.show({
+  //   message:AppStorage.Get<string>('user_cart')
+  // })
 
 }
 
@@ -480,3 +518,6 @@ const getCarts = ()=>{
   return JSON.parse( AppStorage.Get<string>('user_cart' || '[]')) as FoodItem[]
 }
 
+const cleaseCarts = () =>{
+  AppStorage.Set<string>('user_cart','[]')
+}
